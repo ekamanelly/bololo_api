@@ -52,8 +52,8 @@ __decorate([
 ], StudyController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, swagger_1.ApiQuery)({ name: 'page', description: controller_1.studyDocs.get.query.page }),
-    (0, swagger_1.ApiQuery)({ name: 'search', description: controller_1.studyDocs.get.query.search }),
+    (0, swagger_1.ApiQuery)({ name: 'page', description: controller_1.studyDocs.get.query.page, required: false }),
+    (0, swagger_1.ApiQuery)({ name: 'search', description: controller_1.studyDocs.get.query.search, required: false }),
     (0, swagger_1.ApiCreatedResponse)({ description: controller_1.studyDocs.get.response, type: [study_entity_1.Study] }),
     __param(0, (0, common_1.Query)('page')),
     __param(1, (0, common_1.Query)('search')),

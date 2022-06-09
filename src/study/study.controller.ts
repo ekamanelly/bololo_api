@@ -23,8 +23,8 @@ export class StudyController {
   }
 
   @Get()
-  @ApiQuery({name:'page', description:studyDocs.get.query.page})
-  @ApiQuery({name:'search', description:studyDocs.get.query.search})
+  @ApiQuery({name:'page', description:studyDocs.get.query.page, required:false})
+  @ApiQuery({name:'search', description:studyDocs.get.query.search, required:false})
   @ApiCreatedResponse({description:studyDocs.get.response, type:[Study]})
   findAll(@Query('page')page:string, @Query('search') search: string  ) {
     return this.studyService.findAll({page, search});

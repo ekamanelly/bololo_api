@@ -25,7 +25,7 @@ let StudyService = class StudyService {
         createStudyDto.datePosted = new Date().getTime();
         return this.study.create(createStudyDto);
     }
-    findAll({ search, page }) {
+    findAll({ search, page = "1" }) {
         return this.study.find({ page, search });
     }
     findOne(_id) {

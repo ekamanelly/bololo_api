@@ -14,7 +14,7 @@ export class StudyService {
     return this.study.create(createStudyDto)
   }
 
-  findAll({search, page}) {
+  findAll({search, page="1"}) {
     return this.study.find({page, search})
   }
 

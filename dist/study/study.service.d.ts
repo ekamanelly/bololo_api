@@ -31,7 +31,7 @@ export declare class StudyService {
     }>;
     findAll({ search, page }: {
         search: any;
-        page: any;
+        page?: string;
     }): import("mongoose").Query<(Study & import("mongoose").Document<any, any, any> & {
         _id: any;
     })[], Study & import("mongoose").Document<any, any, any> & {
