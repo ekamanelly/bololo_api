@@ -3,26 +3,29 @@ import { StudyService } from './study.service';
 import { CreateStudyDto } from './dto/create-study.dto';
 import { UpdateStudyDto } from './dto/update-study.dto';
 import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiQuery, ApiResponse } from '@nestjs/swagger';
-import * as docs from './study-docs/controller.json'
+// import {studyDocs} from './study-docs/controller.js'
 import { Study } from './entities/study.entity';
-import { query } from 'express';
+import { studyDocs } from './study-docs/controller';
+
+
+
 
 @Controller('study')
 export class StudyController {
   constructor(private readonly studyService: StudyService) {}
 
   @Post()
-  @ApiBody({description:docs.post.apiBody, type:CreateStudyDto})
-  @ApiCreatedResponse({description:docs.post.response, type:Study})
+  @ApiBody({description:studyDocs.post.apiBody, type:CreateStudyDto})
+  @ApiCreatedResponse({description:studyDocs.post.response, type:Study})
   @ApiBadRequestResponse()
   create(@Body() createStudyDto: CreateStudyDto) {
     return this.studyService.create(createStudyDto);
   }
 
   @Get()
-  @ApiQuery({name:'page', description:docs.get.query.page})
-  @ApiQuery({name:'search', description:docs.get.query.search})
-  @ApiCreatedResponse({description:docs.get.response, type:[Study]})
+  @ApiQuery({name:'page', description:studyDocs.get.query.page})
+  @ApiQuery({name:'search', description:studyDocs.get.query.search})
+  @ApiCreatedResponse({description:studyDocs.get.response, type:[Study]})
   findAll(@Query('page')page:string, @Query('search') search: string  ) {
     return this.studyService.findAll({page, search});
   }
