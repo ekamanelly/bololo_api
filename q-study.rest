@@ -1,0 +1,7 @@
+POST http://localhost:9000/api/studies HTTP/1.1
+"Content-header": "application/json"
+
+{
+   "title":"google.com" 
+}
+
