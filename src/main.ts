@@ -10,9 +10,9 @@ async function bootstrap() {
   //
   app.enableCors({
     origin: [
-      'https://firstride.herokuapp.com',
-      'http://localhost:3001/',
-      'http://localhost:2022/',
+      'https://gdn-hero.herokuapp.com',
+      'http://localhost:3001',
+      'http://localhost:2022',
     ],
   });
 
