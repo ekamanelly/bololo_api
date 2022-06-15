@@ -16,16 +16,18 @@ exports.StudyService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const studiy_property_entity_1 = require("./entities/studiy-property.entity");
 const study_entity_1 = require("./entities/study.entity");
 let StudyService = class StudyService {
-    constructor(study) {
+    constructor(study, studyProperty) {
         this.study = study;
+        this.studyProperty = studyProperty;
     }
     create(createStudyDto) {
         createStudyDto.datePosted = new Date().getTime();
         return this.study.create(createStudyDto);
     }
-    findAll({ search, page = "1" }) {
+    findAll({ search, page = '1' }) {
         return this.study.find({ page, search });
     }
     findOne(_id) {
@@ -37,11 +39,26 @@ let StudyService = class StudyService {
     remove(_id) {
         return this.study.updateOne({ _id }, { isDeleted: true });
     }
+    createStudyProperty(createStudyProperty) {
+        const dateCreated = new Date().getTime();
+        return this.studyProperty.create(Object.assign(Object.assign({}, createStudyProperty), { dateCreated }));
+    }
+    findStudyProperties(tag) {
+        if (tag)
+            return this.studyProperty.find({ tag, isDeleted: false });
+        else
+            return this.studyProperty.find({ isDeleted: false });
+    }
+    removeProperty(_id) {
+        return this.studyProperty.updateOne({ _id }, { isDeleted: true });
+    }
 };
 StudyService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(study_entity_1.Study.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(1, (0, mongoose_1.InjectModel)(studiy_property_entity_1.StudyProperty.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model])
 ], StudyService);
 exports.StudyService = StudyService;
 //# sourceMappingURL=study.service.js.map

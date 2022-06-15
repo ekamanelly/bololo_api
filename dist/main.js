@@ -9,7 +9,7 @@ async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.enableCors({
         origin: [
-            'https://firstride.herokuapp.com',
+            'https://gdn-hero.herokuapp.com',
             'http://localhost:3001',
             'http://localhost:2022',
         ],

@@ -20,12 +20,15 @@
 /// <reference types="mongoose/types/utility" />
 /// <reference types="mongoose/types/validation" />
 import { Model } from 'mongoose';
+import { CreateStudyPropertyDTO } from './dto/create-study-property.DTO';
 import { CreateStudyDto } from './dto/create-study.dto';
 import { UpdateStudyDto } from './dto/update-study.dto';
+import { StudyProperty, studyPropertyDocument } from './entities/studiy-property.entity';
 import { Study, StudyDocument } from './entities/study.entity';
 export declare class StudyService {
     private study;
-    constructor(study: Model<StudyDocument>);
+    private studyProperty;
+    constructor(study: Model<StudyDocument>, studyProperty: Model<studyPropertyDocument>);
     create(createStudyDto: CreateStudyDto): Promise<Study & import("mongoose").Document<any, any, any> & {
         _id: any;
     }>;
@@ -46,4 +49,15 @@ export declare class StudyService {
     remove(_id: string): import("mongoose").Query<import("mongodb").UpdateResult, Study & import("mongoose").Document<any, any, any> & {
         _id: any;
     }, {}, StudyDocument>;
+    createStudyProperty(createStudyProperty: CreateStudyPropertyDTO): Promise<StudyProperty & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    }>;
+    findStudyProperties(tag: string): import("mongoose").Query<(StudyProperty & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    })[], StudyProperty & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    }, {}, studyPropertyDocument>;
+    removeProperty(_id: string): import("mongoose").Query<import("mongodb").UpdateResult, StudyProperty & import("mongoose").Document<any, any, any> & {
+        _id: any;
+    }, {}, studyPropertyDocument>;
 }
