@@ -34,7 +34,7 @@ let StudyController = class StudyController {
         return this.studyService.findOne(id);
     }
     update(id, updateStudyDto) {
-        return this.studyService.update(+id, updateStudyDto);
+        return this.studyService.update(id, updateStudyDto);
     }
     remove(id) {
         return this.studyService.remove(id);

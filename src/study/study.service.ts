@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateStudyPropertyDTO } from './dto/create-study-property.DTO';
@@ -27,27 +27,48 @@ export class StudyService {
   }
 
   findOne(_id: string) {
-    return this.study.findById({ _id, isDeleted: false });
+    return this.study.find({ _id, isDeleted: false });
   }
 
-  update(id: number, updateStudyDto: UpdateStudyDto) {
-    return `This action updates a #${id} study`;
+  async update(_id: string, updateStudyDto: UpdateStudyDto) {
+    try {
+      const result = await this.study.updateOne({ _id }, UpdateStudyDto);
+      return { acknowledged: result.acknowledged };
+    } catch (error) {
+      throw new HttpException('not found', HttpStatus.NOT_FOUND);
+    }
   }
 
-  remove(_id: string) {
-    return this.study.updateOne({ _id }, { isDeleted: true });
+  async remove(_id: string) {
+    try {
+      const result = await this.study.updateOne({ _id }, { isDeleted: true });
+      return { acknowledged: result.acknowledged };
+    } catch (error) {
+      throw new HttpException('not found', HttpStatus.NOT_FOUND);
+    }
   }
 
-  //study-property collection
+  //study-property service
   createStudyProperty(createStudyProperty: CreateStudyPropertyDTO) {
     const dateCreated = new Date().getTime();
     return this.studyProperty.create({ ...createStudyProperty, dateCreated });
   }
   findStudyProperties(tag: string) {
-    if (tag) return this.studyProperty.find({ tag, isDeleted: false });
-    else return this.studyProperty.find({ isDeleted: false });
+    try {
+      if (tag) return this.studyProperty.find({ tag, isDeleted: false });
+      else return this.studyProperty.find({ isDeleted: false });
+    } catch (error) {
+      throw new HttpException('not found', HttpStatus.NOT_FOUND);
+      
+    }
   }
-  removeProperty(_id: string) {
-    return this.studyProperty.updateOne({ _id }, { isDeleted: true });
+  async removeProperty(_id: string) {
+    try {
+      const result = await this.studyProperty.updateOne({ _id }, { isDeleted: true })
+      return { acknowledged: result.acknowledged };
+    } catch (error) {
+      throw new HttpException('not found', HttpStatus.NOT_FOUND);
+    }
+    // return ;
   }
 }

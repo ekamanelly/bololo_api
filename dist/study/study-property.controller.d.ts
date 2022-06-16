@@ -34,7 +34,7 @@ export declare class StudyPropertyController {
     })[], StudyProperty & import("mongoose").Document<any, any, any> & {
         _id: any;
     }, {}, import("./entities/studiy-property.entity").studyPropertyDocument>;
-    deleteStudyProperty(_id: string): import("mongoose").Query<import("mongodb").UpdateResult, StudyProperty & import("mongoose").Document<any, any, any> & {
-        _id: any;
-    }, {}, import("./entities/studiy-property.entity").studyPropertyDocument>;
+    deleteStudyProperty(_id: string): Promise<{
+        acknowledged: boolean;
+    }>;
 }

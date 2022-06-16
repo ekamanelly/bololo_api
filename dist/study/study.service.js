@@ -16,6 +16,7 @@ exports.StudyService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const update_study_dto_1 = require("./dto/update-study.dto");
 const studiy_property_entity_1 = require("./entities/studiy-property.entity");
 const study_entity_1 = require("./entities/study.entity");
 let StudyService = class StudyService {
@@ -31,26 +32,49 @@ let StudyService = class StudyService {
         return this.study.find({ page, search });
     }
     findOne(_id) {
-        return this.study.findById({ _id, isDeleted: false });
+        return this.study.find({ _id, isDeleted: false });
     }
-    update(id, updateStudyDto) {
-        return `This action updates a #${id} study`;
+    async update(_id, updateStudyDto) {
+        try {
+            const result = await this.study.updateOne({ _id }, update_study_dto_1.UpdateStudyDto);
+            return { acknowledged: result.acknowledged };
+        }
+        catch (error) {
+            throw new common_1.HttpException('not found', common_1.HttpStatus.NOT_FOUND);
+        }
     }
-    remove(_id) {
-        return this.study.updateOne({ _id }, { isDeleted: true });
+    async remove(_id) {
+        try {
+            const result = await this.study.updateOne({ _id }, { isDeleted: true });
+            return { acknowledged: result.acknowledged };
+        }
+        catch (error) {
+            throw new common_1.HttpException('not found', common_1.HttpStatus.NOT_FOUND);
+        }
     }
     createStudyProperty(createStudyProperty) {
         const dateCreated = new Date().getTime();
         return this.studyProperty.create(Object.assign(Object.assign({}, createStudyProperty), { dateCreated }));
     }
     findStudyProperties(tag) {
-        if (tag)
-            return this.studyProperty.find({ tag, isDeleted: false });
-        else
-            return this.studyProperty.find({ isDeleted: false });
+        try {
+            if (tag)
+                return this.studyProperty.find({ tag, isDeleted: false });
+            else
+                return this.studyProperty.find({ isDeleted: false });
+        }
+        catch (error) {
+            throw new common_1.HttpException('not found', common_1.HttpStatus.NOT_FOUND);
+        }
     }
-    removeProperty(_id) {
-        return this.studyProperty.updateOne({ _id }, { isDeleted: true });
+    async removeProperty(_id) {
+        try {
+            const result = await this.studyProperty.updateOne({ _id }, { isDeleted: true });
+            return { acknowledged: result.acknowledged };
+        }
+        catch (error) {
+            throw new common_1.HttpException('not found', common_1.HttpStatus.NOT_FOUND);
+        }
     }
 };
 StudyService = __decorate([

@@ -32,10 +32,10 @@ let DoctorService = class DoctorService {
     }
     async findAll(name = {}, page = 1) {
         var perPage = 8;
-        const totalDocs = await this.doctor.count();
+        const totalDocs = await this.doctor.find(Object.assign({ isDeleted: false }, name)).count();
         const totalPage = Math.ceil(totalDocs / perPage);
         return this.doctor
-            .find(name)
+            .find(Object.assign({ isDeleted: false }, name))
             .sort({ date: 'asc' })
             .limit(perPage)
             .skip(perPage * (page - 1))
@@ -55,7 +55,7 @@ let DoctorService = class DoctorService {
     }
     async findOne(_id) {
         try {
-            const result = await this.doctor.findById({ _id, isDeleted: false });
+            const result = await this.doctor.find({ _id, isDeleted: false });
             return result;
         }
         catch (error) {
@@ -65,7 +65,7 @@ let DoctorService = class DoctorService {
     async update(_id, updateDoctorDto) {
         try {
             const result = await this.doctor.updateOne({ _id }, updateDoctorDto);
-            return result;
+            return { acknowledged: result.acknowledged };
         }
         catch (error) {
             throw new common_1.HttpException('not found', common_1.HttpStatus.NOT_FOUND);
@@ -73,8 +73,8 @@ let DoctorService = class DoctorService {
     }
     async remove(_id) {
         try {
-            const result = this.doctor.updateOne({ _id }, { isDeleted: true });
-            return result;
+            const result = await this.doctor.updateOne({ _id }, { isDeleted: true });
+            return { acknowledged: result.acknowledged };
         }
         catch (error) {
             throw new common_1.HttpException('not found', common_1.HttpStatus.NOT_FOUND);

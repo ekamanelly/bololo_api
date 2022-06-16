@@ -35,13 +35,15 @@ export declare class StudyController {
     })[], Study & import("mongoose").Document<any, any, any> & {
         _id: any;
     }, {}, import("./entities/study.entity").StudyDocument>;
-    findOne(id: string): import("mongoose").Query<Study & import("mongoose").Document<any, any, any> & {
+    findOne(id: string): import("mongoose").Query<(Study & import("mongoose").Document<any, any, any> & {
         _id: any;
-    }, Study & import("mongoose").Document<any, any, any> & {
-        _id: any;
-    }, {}, import("./entities/study.entity").StudyDocument>;
-    update(id: string, updateStudyDto: UpdateStudyDto): string;
-    remove(id: string): import("mongoose").Query<import("mongodb").UpdateResult, Study & import("mongoose").Document<any, any, any> & {
+    })[], Study & import("mongoose").Document<any, any, any> & {
         _id: any;
     }, {}, import("./entities/study.entity").StudyDocument>;
+    update(id: string, updateStudyDto: UpdateStudyDto): Promise<{
+        acknowledged: boolean;
+    }>;
+    remove(id: string): Promise<{
+        acknowledged: boolean;
+    }>;
 }

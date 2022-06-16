@@ -37,7 +37,7 @@ export class StudyController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStudyDto: UpdateStudyDto) {
-    return this.studyService.update(+id, updateStudyDto);
+    return this.studyService.update(id, updateStudyDto);
   }
 
   @Delete(':id')

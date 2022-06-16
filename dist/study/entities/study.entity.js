@@ -16,7 +16,7 @@ let Study = class Study {
 };
 __decorate([
     (0, swagger_1.ApiProperty)({
-        description: 'Please capitalized first letter'
+        description: 'Please capitalized first letter',
     }),
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
@@ -24,37 +24,45 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)(),
     (0, swagger_1.ApiProperty)({
-        description: 'url to cloud storage'
+        description: 'url to cloud storage',
     }),
     __metadata("design:type", String)
 ], Study.prototype, "imageUrl", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        description: 'This might be an array of staring, one to represent a paragraph. but for now it just string'
+        description: 'This might be an array of staring, one to represent a paragraph. but for now it just string',
     }),
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Study.prototype, "description", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        description: 'The value decide if the study is publicly displayed, false by default '
+        description: 'The value decide if the study is publicly displayed, false by default ',
     }),
     (0, mongoose_1.Prop)({ default: true }),
     __metadata("design:type", Boolean)
 ], Study.prototype, "isDrafted", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        description: ' ? '
+        description: ' ? ',
     }),
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Study.prototype, "status", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        description: ' date from the server side, and number you can convert to  js data '
+        description: ' date from the server side, and number you can convert to  js data ',
     }),
+    (0, mongoose_1.Prop)({ default: new Date().getTime() }),
     __metadata("design:type", Number)
 ], Study.prototype, "datePosted", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: '',
+    }),
+    (0, mongoose_1.Prop)({ default: false }),
+    __metadata("design:type", Boolean)
+], Study.prototype, "isDeleted", void 0);
 Study = __decorate([
     (0, mongoose_1.Schema)()
 ], Study);

@@ -40,15 +40,17 @@ export declare class StudyService {
     })[], Study & import("mongoose").Document<any, any, any> & {
         _id: any;
     }, {}, StudyDocument>;
-    findOne(_id: string): import("mongoose").Query<Study & import("mongoose").Document<any, any, any> & {
+    findOne(_id: string): import("mongoose").Query<(Study & import("mongoose").Document<any, any, any> & {
         _id: any;
-    }, Study & import("mongoose").Document<any, any, any> & {
-        _id: any;
-    }, {}, StudyDocument>;
-    update(id: number, updateStudyDto: UpdateStudyDto): string;
-    remove(_id: string): import("mongoose").Query<import("mongodb").UpdateResult, Study & import("mongoose").Document<any, any, any> & {
+    })[], Study & import("mongoose").Document<any, any, any> & {
         _id: any;
     }, {}, StudyDocument>;
+    update(_id: string, updateStudyDto: UpdateStudyDto): Promise<{
+        acknowledged: boolean;
+    }>;
+    remove(_id: string): Promise<{
+        acknowledged: boolean;
+    }>;
     createStudyProperty(createStudyProperty: CreateStudyPropertyDTO): Promise<StudyProperty & import("mongoose").Document<any, any, any> & {
         _id: any;
     }>;
@@ -57,7 +59,7 @@ export declare class StudyService {
     })[], StudyProperty & import("mongoose").Document<any, any, any> & {
         _id: any;
     }, {}, studyPropertyDocument>;
-    removeProperty(_id: string): import("mongoose").Query<import("mongodb").UpdateResult, StudyProperty & import("mongoose").Document<any, any, any> & {
-        _id: any;
-    }, {}, studyPropertyDocument>;
+    removeProperty(_id: string): Promise<{
+        acknowledged: boolean;
+    }>;
 }

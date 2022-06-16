@@ -18,9 +18,13 @@ export declare class DoctorService {
         hasNextPage: boolean;
         hasPrevPage: boolean;
     }>;
-    findOne(_id: string): Promise<Doctor & import("mongoose").Document<any, any, any> & {
+    findOne(_id: string): Promise<(Doctor & import("mongoose").Document<any, any, any> & {
         _id: any;
+    })[]>;
+    update(_id: string, updateDoctorDto: UpdateDoctorDto): Promise<{
+        acknowledged: boolean;
     }>;
-    update(_id: string, updateDoctorDto: UpdateDoctorDto): Promise<import("mongodb").UpdateResult>;
-    remove(_id: string): Promise<import("mongodb").UpdateResult>;
+    remove(_id: string): Promise<{
+        acknowledged: boolean;
+    }>;
 }
