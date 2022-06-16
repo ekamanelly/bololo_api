@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateImageResponse = exports.CreateImageDTO = void 0;
+exports.CreateImageDTO = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateImageDTO {
@@ -33,15 +33,4 @@ __decorate([
     __metadata("design:type", File)
 ], CreateImageDTO.prototype, "file", void 0);
 exports.CreateImageDTO = CreateImageDTO;
-class CreateImageResponse {
-}
-__decorate([
-    (0, swagger_1.ApiProperty)({
-        required: true,
-        description: 'this field is dynamic and will be what you sent as ImageName, make sure to await the same value. it value will be the imageUrl',
-        type: String
-    }),
-    __metadata("design:type", String)
-], CreateImageResponse.prototype, "dynamicName", void 0);
-exports.CreateImageResponse = CreateImageResponse;
 //# sourceMappingURL=create-image.dto.js.map

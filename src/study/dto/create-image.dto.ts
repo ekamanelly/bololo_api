@@ -22,11 +22,3 @@ export class CreateImageDTO {
 
 }
 
-export class CreateImageResponse {
-    @ApiProperty({
-        required:true,
-        description:'this field is dynamic and will be what you sent as ImageName, make sure to await the same value. it value will be the imageUrl', 
-        type:String   
-      })
-      dynamicName: string; 
-}
