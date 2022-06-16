@@ -12,12 +12,14 @@ const mongoose_1 = require("@nestjs/mongoose");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const study_module_1 = require("./study/study.module");
+const doctor_module_1 = require("./doctor/doctor.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [mongoose_1.MongooseModule.forRoot('mongodb+srv://gadolin:mqnizjC8pLOCTwk1@vorem.zly4i.mongodb.net/gadolin?retryWrites=true&w=majority'),
             study_module_1.StudyModule,
+            doctor_module_1.DoctorModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

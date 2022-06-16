@@ -14,6 +14,8 @@ const mongoose_1 = require("@nestjs/mongoose");
 const study_entity_1 = require("./entities/study.entity");
 const studiy_property_entity_1 = require("./entities/studiy-property.entity");
 const study_property_controller_1 = require("./study-property.controller");
+const study_image_controller_1 = require("./study-image-controller");
+const study_image_service_1 = require("./study-image.service");
 let StudyModule = class StudyModule {
 };
 StudyModule = __decorate([
@@ -24,8 +26,8 @@ StudyModule = __decorate([
                 { name: studiy_property_entity_1.StudyProperty.name, schema: studiy_property_entity_1.studyPropertySchema },
             ]),
         ],
-        controllers: [study_controller_1.StudyController, study_property_controller_1.StudyPropertyController],
-        providers: [study_service_1.StudyService],
+        controllers: [study_controller_1.StudyController, study_property_controller_1.StudyPropertyController, study_image_controller_1.StudyImageController],
+        providers: [study_service_1.StudyService, study_image_service_1.ImageService,],
     })
 ], StudyModule);
 exports.StudyModule = StudyModule;

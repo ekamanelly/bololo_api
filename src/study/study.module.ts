@@ -8,15 +8,17 @@ import {
   studyPropertySchema,
 } from './entities/studiy-property.entity';
 import { StudyPropertyController } from './study-property.controller';
+import { StudyImageController } from './study-image-controller';
+import { ImageService } from './study-image.service';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([
+  imports: [ 
+    MongooseModule.forFeature([ 
       { name: Study.name, schema: StudySchema },
       { name: StudyProperty.name, schema: studyPropertySchema },
     ]),
   ],
-  controllers: [StudyController, StudyPropertyController],
-  providers: [StudyService],
+  controllers: [StudyController, StudyPropertyController, StudyImageController],
+  providers: [StudyService, ImageService,],
 })
 export class StudyModule {}
