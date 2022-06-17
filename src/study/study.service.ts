@@ -22,8 +22,43 @@ export class StudyService {
     return this.study.create(createStudyDto);
   }
 
-  findAll({ search, page = '1' }) {
-    return this.study.find({ page, search });
+  async findAll(search:string, page = 1) {
+    const name = search
+      ? {
+          $or: [
+            { description: { $regex: search, $options: 'i' } },
+            { title: { $regex: search, $options: 'i' } },
+          ],
+        }
+      : {};
+    var perPage = 8;
+    const totalDocs = await this.study
+      .find({ isDeleted: false, ...name })
+      .count();
+    const totalPage = Math.ceil(totalDocs / perPage);
+    // const name = search
+
+    return this.study
+      .find({ isDeleted: false, ...name })
+      .sort({ date: 'asc' })
+      .limit(perPage)
+      .skip(perPage * (page - 1))
+      .then((docs) => {
+        return {
+          docs,
+          totalDocs,
+          page,
+          totalPage,
+          hasNextPage: page < totalPage,
+          hasPrevPage: page > 1,
+        };
+      })
+      .catch((err) => {
+        throw new HttpException(
+          'Server error',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      });
   }
 
   findOne(_id: string) {
@@ -59,12 +94,14 @@ export class StudyService {
       else return this.studyProperty.find({ isDeleted: false });
     } catch (error) {
       throw new HttpException('not found', HttpStatus.NOT_FOUND);
-      
     }
   }
   async removeProperty(_id: string) {
     try {
-      const result = await this.studyProperty.updateOne({ _id }, { isDeleted: true })
+      const result = await this.studyProperty.updateOne(
+        { _id },
+        { isDeleted: true },
+      );
       return { acknowledged: result.acknowledged };
     } catch (error) {
       throw new HttpException('not found', HttpStatus.NOT_FOUND);

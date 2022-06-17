@@ -32,14 +32,16 @@ export declare class StudyService {
     create(createStudyDto: CreateStudyDto): Promise<Study & import("mongoose").Document<any, any, any> & {
         _id: any;
     }>;
-    findAll({ search, page }: {
-        search: any;
-        page?: string;
-    }): import("mongoose").Query<(Study & import("mongoose").Document<any, any, any> & {
-        _id: any;
-    })[], Study & import("mongoose").Document<any, any, any> & {
-        _id: any;
-    }, {}, StudyDocument>;
+    findAll(search: string, page?: number): Promise<{
+        docs: (Study & import("mongoose").Document<any, any, any> & {
+            _id: any;
+        })[];
+        totalDocs: number;
+        page: number;
+        totalPage: number;
+        hasNextPage: boolean;
+        hasPrevPage: boolean;
+    }>;
     findOne(_id: string): import("mongoose").Query<(Study & import("mongoose").Document<any, any, any> & {
         _id: any;
     })[], Study & import("mongoose").Document<any, any, any> & {

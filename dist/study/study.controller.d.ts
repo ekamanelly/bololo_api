@@ -30,11 +30,16 @@ export declare class StudyController {
     create(createStudyDto: CreateStudyDto): Promise<Study & import("mongoose").Document<any, any, any> & {
         _id: any;
     }>;
-    findAll(page: string, search: string): import("mongoose").Query<(Study & import("mongoose").Document<any, any, any> & {
-        _id: any;
-    })[], Study & import("mongoose").Document<any, any, any> & {
-        _id: any;
-    }, {}, import("./entities/study.entity").StudyDocument>;
+    findAll(page: string, search: string): Promise<{
+        docs: (Study & import("mongoose").Document<any, any, any> & {
+            _id: any;
+        })[];
+        totalDocs: number;
+        page: number;
+        totalPage: number;
+        hasNextPage: boolean;
+        hasPrevPage: boolean;
+    }>;
     findOne(id: string): import("mongoose").Query<(Study & import("mongoose").Document<any, any, any> & {
         _id: any;
     })[], Study & import("mongoose").Document<any, any, any> & {

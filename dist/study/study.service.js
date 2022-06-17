@@ -28,8 +28,38 @@ let StudyService = class StudyService {
         createStudyDto.datePosted = new Date().getTime();
         return this.study.create(createStudyDto);
     }
-    findAll({ search, page = '1' }) {
-        return this.study.find({ page, search });
+    async findAll(search, page = 1) {
+        const name = search
+            ? {
+                $or: [
+                    { description: { $regex: search, $options: 'i' } },
+                    { title: { $regex: search, $options: 'i' } },
+                ],
+            }
+            : {};
+        var perPage = 8;
+        const totalDocs = await this.study
+            .find(Object.assign({ isDeleted: false }, name))
+            .count();
+        const totalPage = Math.ceil(totalDocs / perPage);
+        return this.study
+            .find(Object.assign({ isDeleted: false }, name))
+            .sort({ date: 'asc' })
+            .limit(perPage)
+            .skip(perPage * (page - 1))
+            .then((docs) => {
+            return {
+                docs,
+                totalDocs,
+                page,
+                totalPage,
+                hasNextPage: page < totalPage,
+                hasPrevPage: page > 1,
+            };
+        })
+            .catch((err) => {
+            throw new common_1.HttpException('Server error', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        });
     }
     findOne(_id) {
         return this.study.find({ _id, isDeleted: false });

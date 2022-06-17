@@ -28,7 +28,7 @@ export class DoctorService {
     const totalDocs = await this.doctor.find({ isDeleted:false ,...name }).count();
     const totalPage = Math.ceil(totalDocs / perPage);
     // const name = search
-    // cons
+ 
     return this.doctor
       .find({ isDeleted:false ,...name })
       .sort({ date: 'asc' })
