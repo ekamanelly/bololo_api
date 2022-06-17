@@ -53,7 +53,7 @@ export class DoctorController {
   findAll(@Query('page') page: string, @Query('search') search: string) {
     console.log(search)
     return this.doctorService.findAll(
-      search && { name:search },
+      search,
       page && Number(page),
     );
   }

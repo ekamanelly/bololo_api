@@ -23,14 +23,17 @@ export class DoctorService {
     }
   }
 
-  async findAll(name={}, page = 1) {
+  async findAll(query:string, page = 1) {
+    const criteria = query
+    ? { name: { $regex: query, $options: 'i' } }
+    : {};
     var perPage = 8;
-    const totalDocs = await this.doctor.find({ isDeleted:false ,...name }).count();
+    const totalDocs = await this.doctor.find({ isDeleted:false ,...criteria }).count();
     const totalPage = Math.ceil(totalDocs / perPage);
     // const name = search
  
     return this.doctor
-      .find({ isDeleted:false ,...name })
+      .find({ isDeleted:false ,...criteria})
       .sort({ date: 'asc' })
       .limit(perPage)
       .skip(perPage * (page - 1))

@@ -29,7 +29,7 @@ let DoctorController = class DoctorController {
     }
     findAll(page, search) {
         console.log(search);
-        return this.doctorService.findAll(search && { name: search }, page && Number(page));
+        return this.doctorService.findAll(search, page && Number(page));
     }
     findOne(_id) {
         return this.doctorService.findOne(_id);

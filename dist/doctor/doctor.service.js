@@ -30,12 +30,15 @@ let DoctorService = class DoctorService {
             throw new common_1.HttpException('name already exist', common_1.HttpStatus.NOT_ACCEPTABLE);
         }
     }
-    async findAll(name = {}, page = 1) {
+    async findAll(query, page = 1) {
+        const criteria = query
+            ? { name: { $regex: query, $options: 'i' } }
+            : {};
         var perPage = 8;
-        const totalDocs = await this.doctor.find(Object.assign({ isDeleted: false }, name)).count();
+        const totalDocs = await this.doctor.find(Object.assign({ isDeleted: false }, criteria)).count();
         const totalPage = Math.ceil(totalDocs / perPage);
         return this.doctor
-            .find(Object.assign({ isDeleted: false }, name))
+            .find(Object.assign({ isDeleted: false }, criteria))
             .sort({ date: 'asc' })
             .limit(perPage)
             .skip(perPage * (page - 1))

@@ -8,7 +8,7 @@ export declare class DoctorService {
     create(createDoctorDto: CreateDoctorDto): Promise<Doctor & import("mongoose").Document<any, any, any> & {
         _id: any;
     }>;
-    findAll(name?: {}, page?: number): Promise<{
+    findAll(query: string, page?: number): Promise<{
         docs: (Doctor & import("mongoose").Document<any, any, any> & {
             _id: any;
         })[];
