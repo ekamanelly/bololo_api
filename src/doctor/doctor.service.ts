@@ -22,7 +22,7 @@ export class DoctorService {
       );
     }
   }
-
+// sma
   async findAll(query:string, page = 1) {
     const criteria = query
     ? { name: { $regex: query, $options: 'i' } }

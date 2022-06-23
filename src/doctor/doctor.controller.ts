@@ -51,7 +51,7 @@ export class DoctorController {
   })
   @ApiCreatedResponse({ description: doctorDocs.get.response, type: [Doctor] })
   findAll(@Query('page') page: string, @Query('search') search: string) {
-    console.log(search)
+    // console.log(search)
     return this.doctorService.findAll(
       search,
       page && Number(page),
