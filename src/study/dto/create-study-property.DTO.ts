@@ -2,8 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsNotEmpty } from "class-validator";
 
 export enum StudyPropertyEnum {
-    status= 'status',
-    property= 'property',
+    statusProperty= 'statusProperty',
+    typeProperty= 'typeProperty',
 }
 
 export class CreateStudyPropertyDTO {
