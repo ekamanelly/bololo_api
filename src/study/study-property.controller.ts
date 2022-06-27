@@ -23,7 +23,7 @@ import {
 } from './entities/studiy-property.entity';
 import { studyPropertyDocs } from './study-docs/controller';
 import { StudyService } from './study.service';
-
+//
 @Controller('study-property')
 export class StudyPropertyController {
   constructor(private readonly studyPropertyService: StudyService) {}
