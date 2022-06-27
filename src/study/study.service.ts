@@ -67,7 +67,7 @@ export class StudyService {
 
   async update(_id: string, updateStudyDto: UpdateStudyDto) {
     try {
-      const result = await this.study.updateOne({ _id }, UpdateStudyDto);
+      const result = await this.study.updateOne({ _id }, updateStudyDto);
       return { acknowledged: result.acknowledged };
     } catch (error) {
       throw new HttpException('not found', HttpStatus.NOT_FOUND);
