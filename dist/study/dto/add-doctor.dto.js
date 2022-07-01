@@ -9,32 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateStudyPropertyDTO = exports.StudyPropertyEnum = void 0;
+exports.AddDoctorToStudyDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-var StudyPropertyEnum;
-(function (StudyPropertyEnum) {
-    StudyPropertyEnum["statusProperty"] = "statusProperty";
-    StudyPropertyEnum["typeProperty"] = "typeProperty";
-})(StudyPropertyEnum = exports.StudyPropertyEnum || (exports.StudyPropertyEnum = {}));
-class CreateStudyPropertyDTO {
+class AddDoctorToStudyDto {
 }
 __decorate([
-    (0, swagger_1.ApiProperty)({
-        required: true,
-        description: 'This will have the just the possible value of the enum',
-        enum: StudyPropertyEnum
-    }),
-    (0, class_validator_1.IsEnum)(StudyPropertyEnum),
-    __metadata("design:type", String)
-], CreateStudyPropertyDTO.prototype, "tag", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({
-        required: true,
-        description: 'This will be the dynamic date from the user and should be a string'
-    }),
     (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({ description: 'Capitalize first latter for better format' }),
     __metadata("design:type", String)
-], CreateStudyPropertyDTO.prototype, "text", void 0);
-exports.CreateStudyPropertyDTO = CreateStudyPropertyDTO;
-//# sourceMappingURL=create-study-property.DTO.js.map
+], AddDoctorToStudyDto.prototype, "doctorName", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({ description: '' }),
+    __metadata("design:type", String)
+], AddDoctorToStudyDto.prototype, "doctorId", void 0);
+exports.AddDoctorToStudyDto = AddDoctorToStudyDto;
+//# sourceMappingURL=add-doctor.dto.js.map

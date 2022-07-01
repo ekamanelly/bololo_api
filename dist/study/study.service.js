@@ -16,7 +16,6 @@ exports.StudyService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const update_study_dto_1 = require("./dto/update-study.dto");
 const studiy_property_entity_1 = require("./entities/studiy-property.entity");
 const study_entity_1 = require("./entities/study.entity");
 let StudyService = class StudyService {
@@ -28,15 +27,22 @@ let StudyService = class StudyService {
         createStudyDto.datePosted = new Date().getTime();
         return this.study.create(createStudyDto);
     }
-    async findAll(search, page = 1) {
-        const name = search
-            ? {
+    async findAll(search, doctorId, page = 1) {
+        let name = {};
+        if (search) {
+            name = {
                 $or: [
                     { description: { $regex: search, $options: 'i' } },
                     { title: { $regex: search, $options: 'i' } },
                 ],
-            }
-            : {};
+            };
+        }
+        else if (doctorId) {
+            name = {
+                doctors: { $in: doctorId }
+            };
+        }
+        search;
         var perPage = 8;
         const totalDocs = await this.study
             .find(Object.assign({ isDeleted: false }, name))
@@ -66,7 +72,7 @@ let StudyService = class StudyService {
     }
     async update(_id, updateStudyDto) {
         try {
-            const result = await this.study.updateOne({ _id }, update_study_dto_1.UpdateStudyDto);
+            const result = await this.study.updateOne({ _id }, updateStudyDto);
             return { acknowledged: result.acknowledged };
         }
         catch (error) {
@@ -104,6 +110,25 @@ let StudyService = class StudyService {
         }
         catch (error) {
             throw new common_1.HttpException('not found', common_1.HttpStatus.NOT_FOUND);
+        }
+    }
+    async addDoctor(_id, doctor) {
+        try {
+            const study = await this.study.updateOne({ _id }, { $push: { doctors: doctor._id } });
+            return { acknowledged: true, study };
+        }
+        catch (error) {
+            console.log(error);
+            return { acknowledged: false };
+        }
+    }
+    async removeDoctor(_id, doctorId) {
+        try {
+            const study = await this.study.updateOne({ _id }, { $pull: { doctors: doctorId } });
+            return { acknowledged: true };
+        }
+        catch (error) {
+            return { acknowledged: false };
         }
     }
 };

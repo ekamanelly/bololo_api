@@ -2,7 +2,8 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
+import { Doctor } from 'src/doctor/entities/doctor.entity';
 
 export type StudyDocument = Study & Document;
 
@@ -43,7 +44,22 @@ export class Study {
     description: ' ? ',
   })
   @Prop()
-  status: 'array of what?';
+  statusProperty: 'array of what?';
+
+  @ApiProperty({
+    // required:true,
+    description: ' ? ',
+  })
+  @Prop()
+  typeProperty: 'array of what?';
+
+  @ApiProperty({
+    // required:true,
+    description:
+      ' date from the server side, and number you can convert to  js data ',
+  })
+  @Prop({  unique:true, type: [{ type: mongoose.Schema.Types.ObjectId, ref: Doctor.name, }] })
+  doctors: Doctor[];
 
   @ApiProperty({
     // required:true,
@@ -54,8 +70,7 @@ export class Study {
   datePosted: number;
 
   @ApiProperty({
-    description:
-      '',
+    description: '',
   })
   @Prop({ default: false })
   isDeleted: boolean;

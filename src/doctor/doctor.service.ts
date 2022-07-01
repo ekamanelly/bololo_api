@@ -11,29 +11,29 @@ export class DoctorService {
     @InjectModel(Doctor.name) private doctor: Model<DoctorDocument>,
   ) {}
 
+  find(param:any) {
+    return this.doctor.find(param);
+  }
   async create(createDoctorDto: CreateDoctorDto) {
     try {
       const result = await this.doctor.create(createDoctorDto);
       return result;
     } catch (error) {
-      throw new HttpException(
-        'name already exist',
-        HttpStatus.NOT_ACCEPTABLE,
-      );
+      throw new HttpException('name already exist', HttpStatus.NOT_ACCEPTABLE);
     }
   }
-// sma
-  async findAll(query:string, page = 1) {
-    const criteria = query
-    ? { name: { $regex: query, $options: 'i' } }
-    : {};
+  // sma
+  async findAll(query: string, page = 1) {
+    const criteria = query ? { name: { $regex: query, $options: 'i' } } : {};
     var perPage = 8;
-    const totalDocs = await this.doctor.find({ isDeleted:false ,...criteria }).count();
+    const totalDocs = await this.doctor
+      .find({ isDeleted: false, ...criteria })
+      .count();
     const totalPage = Math.ceil(totalDocs / perPage);
     // const name = search
- 
+
     return this.doctor
-      .find({ isDeleted:false ,...criteria})
+      .find({ isDeleted: false, ...criteria })
       .sort({ date: 'asc' })
       .limit(perPage)
       .skip(perPage * (page - 1))
@@ -62,23 +62,22 @@ export class DoctorService {
     } catch (error) {
       throw new HttpException('not found', HttpStatus.NOT_FOUND);
     }
-   
   }
 
   async update(_id: string, updateDoctorDto: UpdateDoctorDto) {
     try {
       const result = await this.doctor.updateOne({ _id }, updateDoctorDto);
-      return {acknowledged: result.acknowledged};
+      return { acknowledged: result.acknowledged };
     } catch (error) {
       throw new HttpException('not found', HttpStatus.NOT_FOUND);
     }
   }
 
   async remove(_id: string) {
-    // return 
+    // return
     try {
       const result = await this.doctor.updateOne({ _id }, { isDeleted: true });
-      return {acknowledged: result.acknowledged};
+      return { acknowledged: result.acknowledged };
     } catch (error) {
       throw new HttpException('not found', HttpStatus.NOT_FOUND);
     }

@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { DoctorDocument } from 'src/doctor/entities/doctor.entity';
 import { CreateStudyPropertyDTO } from './dto/create-study-property.DTO';
 import { CreateStudyDto } from './dto/create-study.dto';
 import { UpdateStudyDto } from './dto/update-study.dto';
@@ -22,21 +23,27 @@ export class StudyService {
     return this.study.create(createStudyDto);
   }
 
-  async findAll(search:string, page = 1) {
-    const name = search
-      ? {
-          $or: [
-            { description: { $regex: search, $options: 'i' } },
-            { title: { $regex: search, $options: 'i' } },
-          ],
-        }
-      : {};
+  async findAll(search: string, doctorId: string, page = 1) {
+    let name = {};
+    if (search) {
+      name = {
+        $or: [
+          { description: { $regex: search, $options: 'i' } },
+          { title: { $regex: search, $options: 'i' } },
+        ],
+      };
+    } else if (doctorId) {
+      name = {
+         doctors: { $in: doctorId } 
+      };
+    }
+    search;
+
     var perPage = 8;
     const totalDocs = await this.study
       .find({ isDeleted: false, ...name })
       .count();
     const totalPage = Math.ceil(totalDocs / perPage);
-    // const name = search
 
     return this.study
       .find({ isDeleted: false, ...name })
@@ -107,5 +114,29 @@ export class StudyService {
       throw new HttpException('not found', HttpStatus.NOT_FOUND);
     }
     // return ;
+  }
+
+  async addDoctor(_id: string, doctor: DoctorDocument) {
+    try {
+      const study = await this.study.updateOne(
+        { _id },
+        { $push: { doctors: doctor._id } },
+      );
+      return { acknowledged: true, study };
+    } catch (error) {
+      console.log(error);
+      return { acknowledged: false };
+    }
+  }
+  async removeDoctor(_id: string, doctorId: string) {
+    try {
+      const study = await this.study.updateOne(
+        { _id },
+        { $pull: { doctors: doctorId } },
+      );
+      return { acknowledged: true };
+    } catch (error) {
+      return { acknowledged: false };
+    }
   }
 }

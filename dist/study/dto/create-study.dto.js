@@ -17,7 +17,7 @@ class CreateStudyDto {
 __decorate([
     (0, swagger_1.ApiProperty)({
         required: true,
-        description: 'Please capitalized first letter'
+        description: 'Please capitalized first letter',
     }),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
@@ -26,14 +26,14 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, swagger_1.ApiProperty)({
         required: true,
-        description: 'url to cloud storage'
+        description: 'url to cloud storage',
     }),
     __metadata("design:type", String)
 ], CreateStudyDto.prototype, "imageUrl", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         required: true,
-        description: 'This might be an array of staring, one to represent a paragraph. but for now it just string'
+        description: 'This might be an array of staring, one to represent a paragraph. but for now it just string',
     }),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
@@ -41,7 +41,7 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)({
         required: true,
-        description: 'The value decide if the study is publicly displayed, false by default '
+        description: 'The value decide if the study is publicly displayed, false by default ',
     }),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Boolean)
@@ -49,10 +49,18 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)({
         required: true,
-        description: ' ? '
+        description: ' ? ',
     }),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CreateStudyDto.prototype, "status", void 0);
+], CreateStudyDto.prototype, "statusProperty", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        required: true,
+        description: ' ? ',
+    }),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], CreateStudyDto.prototype, "typeProperty", void 0);
 exports.CreateStudyDto = CreateStudyDto;
 //# sourceMappingURL=create-study.dto.js.map

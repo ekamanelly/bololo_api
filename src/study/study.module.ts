@@ -10,9 +10,13 @@ import {
 import { StudyPropertyController } from './study-property.controller';
 import { StudyImageController } from './study-image-controller';
 import { ImageService } from './study-image.service';
+import { StudyDoctorService } from './study-doctor.service';
+import { DoctorService } from 'src/doctor/doctor.service';
+import { DoctorModule } from 'src/doctor/doctor.module';
 
 @Module({
   imports: [ 
+    DoctorModule,
     MongooseModule.forFeature([ 
       { name: Study.name, schema: StudySchema },
       { name: StudyProperty.name, schema: studyPropertySchema },

@@ -28,7 +28,6 @@ let DoctorController = class DoctorController {
         return this.doctorService.create(createDoctorDto);
     }
     findAll(page, search) {
-        console.log(search);
         return this.doctorService.findAll(search, page && Number(page));
     }
     findOne(_id) {

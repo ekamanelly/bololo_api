@@ -20,6 +20,7 @@
 /// <reference types="mongoose/types/utility" />
 /// <reference types="mongoose/types/validation" />
 import { Model } from 'mongoose';
+import { DoctorDocument } from 'src/doctor/entities/doctor.entity';
 import { CreateStudyPropertyDTO } from './dto/create-study-property.DTO';
 import { CreateStudyDto } from './dto/create-study.dto';
 import { UpdateStudyDto } from './dto/update-study.dto';
@@ -32,7 +33,7 @@ export declare class StudyService {
     create(createStudyDto: CreateStudyDto): Promise<Study & import("mongoose").Document<any, any, any> & {
         _id: any;
     }>;
-    findAll(search: string, page?: number): Promise<{
+    findAll(search: string, doctorId: string, page?: number): Promise<{
         docs: (Study & import("mongoose").Document<any, any, any> & {
             _id: any;
         })[];
@@ -62,6 +63,16 @@ export declare class StudyService {
         _id: any;
     }, {}, studyPropertyDocument>;
     removeProperty(_id: string): Promise<{
+        acknowledged: boolean;
+    }>;
+    addDoctor(_id: string, doctor: DoctorDocument): Promise<{
+        acknowledged: boolean;
+        study: import("mongodb").UpdateResult;
+    } | {
+        acknowledged: boolean;
+        study?: undefined;
+    }>;
+    removeDoctor(_id: string, doctorId: string): Promise<{
         acknowledged: boolean;
     }>;
 }

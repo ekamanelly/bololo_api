@@ -21,6 +21,9 @@ let DoctorService = class DoctorService {
     constructor(doctor) {
         this.doctor = doctor;
     }
+    find(param) {
+        return this.doctor.find(param);
+    }
     async create(createDoctorDto) {
         try {
             const result = await this.doctor.create(createDoctorDto);
@@ -31,11 +34,11 @@ let DoctorService = class DoctorService {
         }
     }
     async findAll(query, page = 1) {
-        const criteria = query
-            ? { name: { $regex: query, $options: 'i' } }
-            : {};
+        const criteria = query ? { name: { $regex: query, $options: 'i' } } : {};
         var perPage = 8;
-        const totalDocs = await this.doctor.find(Object.assign({ isDeleted: false }, criteria)).count();
+        const totalDocs = await this.doctor
+            .find(Object.assign({ isDeleted: false }, criteria))
+            .count();
         const totalPage = Math.ceil(totalDocs / perPage);
         return this.doctor
             .find(Object.assign({ isDeleted: false }, criteria))

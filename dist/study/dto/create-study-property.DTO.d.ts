@@ -1,6 +1,6 @@
 export declare enum StudyPropertyEnum {
-    status = "status",
-    property = "property"
+    statusProperty = "statusProperty",
+    typeProperty = "typeProperty"
 }
 export declare class CreateStudyPropertyDTO {
     tag: string;

@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudySchema = exports.Study = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const swagger_1 = require("@nestjs/swagger");
+const mongoose_2 = require("mongoose");
+const doctor_entity_1 = require("../../doctor/entities/doctor.entity");
 let Study = class Study {
 };
 __decorate([
@@ -48,7 +50,21 @@ __decorate([
     }),
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], Study.prototype, "status", void 0);
+], Study.prototype, "statusProperty", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: ' ? ',
+    }),
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Study.prototype, "typeProperty", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: ' date from the server side, and number you can convert to  js data ',
+    }),
+    (0, mongoose_1.Prop)({ unique: true, type: [{ type: mongoose_2.default.Schema.Types.ObjectId, ref: doctor_entity_1.Doctor.name, }] }),
+    __metadata("design:type", Array)
+], Study.prototype, "doctors", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: ' date from the server side, and number you can convert to  js data ',

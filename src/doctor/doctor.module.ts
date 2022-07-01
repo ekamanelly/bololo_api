@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Doctor, DoctorSchema } from './entities/doctor.entity';
 
 @Module({
+  exports:[DoctorService],
   imports:[MongooseModule.forFeature([{
     name:Doctor.name,schema:DoctorSchema
   }])],

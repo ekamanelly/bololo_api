@@ -20,17 +20,21 @@
 /// <reference types="mongoose/types/utility" />
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose" />
+import { HttpException } from '@nestjs/common';
 import { StudyService } from './study.service';
 import { CreateStudyDto } from './dto/create-study.dto';
 import { UpdateStudyDto } from './dto/update-study.dto';
 import { Study } from './entities/study.entity';
+import { DoctorService } from 'src/doctor/doctor.service';
+import { AddDoctorToStudyDto } from './dto/add-doctor.dto';
 export declare class StudyController {
     private readonly studyService;
-    constructor(studyService: StudyService);
+    private readonly doctorService;
+    constructor(studyService: StudyService, doctorService: DoctorService);
     create(createStudyDto: CreateStudyDto): Promise<Study & import("mongoose").Document<any, any, any> & {
         _id: any;
     }>;
-    findAll(page: string, search: string): Promise<{
+    findAll(page: string, search: string, doctor: string): Promise<any[] | {
         docs: (Study & import("mongoose").Document<any, any, any> & {
             _id: any;
         })[];
@@ -49,6 +53,16 @@ export declare class StudyController {
         acknowledged: boolean;
     }>;
     remove(id: string): Promise<{
+        acknowledged: boolean;
+    }>;
+    addToStudy(addDoctorStudy: AddDoctorToStudyDto, _id: string): Promise<{
+        acknowledged: boolean;
+        study: import("mongodb").UpdateResult;
+    } | {
+        acknowledged: boolean;
+        study?: undefined;
+    } | HttpException>;
+    removeToStudy(studyId: string, doctorId: string): Promise<{
         acknowledged: boolean;
     }>;
 }

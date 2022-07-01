@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   Query,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { StudyService } from './study.service';
 import { CreateStudyDto } from './dto/create-study.dto';
@@ -16,15 +18,21 @@ import {
   ApiBody,
   ApiCreatedResponse,
   ApiQuery,
-  ApiResponse,
 } from '@nestjs/swagger';
-// import {studyDocs} from './study-docs/controller.js'
 import { Study } from './entities/study.entity';
 import { studyDocs } from './study-docs/controller';
+import { StudyDoctorService } from './study-doctor.service';
+import { DoctorService } from 'src/doctor/doctor.service';
+import { DoctorDocument } from 'src/doctor/entities/doctor.entity';
+import { AddDoctorToStudyDto } from './dto/add-doctor.dto';
 
 @Controller('study')
 export class StudyController {
-  constructor(private readonly studyService: StudyService) {}
+  constructor(
+    private readonly studyService: StudyService,
+    private readonly doctorService: DoctorService,
+    // private readonly studyDoctorService: StudyDoctorService,
+  ) {}
 
   @Post()
   @ApiBody({ description: studyDocs.post.apiBody, type: CreateStudyDto })
@@ -45,12 +53,22 @@ export class StudyController {
     description: studyDocs.get.query.search,
     required: false,
   })
+  @ApiQuery({
+    name: 'doctorName',
+    description: studyDocs.get.query.search,
+    required: false,
+  })
   @ApiCreatedResponse({ description: studyDocs.get.response, type: [Study] })
-  findAll(@Query('page') page: string, @Query('search') search: string) {
-    return this.studyService.findAll(
-      search ,
-      page && Number(page),
-    );
+  async findAll(@Query('page') page: string, @Query('search') search: string, @Query('search') doctor: string) {
+    let doctorCredential
+    if(doctor){
+       doctorCredential =await  this.doctorService.find({name:doctor})
+      if(!doctorCredential){
+        return []
+      }
+    }
+    let doctorId = doctorCredential&& doctorCredential._id
+    return this.studyService.findAll(search,doctorId, page && Number(page));
   }
   // ??
 
@@ -67,5 +85,28 @@ export class StudyController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.studyService.remove(id);
+  }
+
+  @Post(':studyId/doctors')
+  @ApiBody({ description: studyDocs.post.apiBody, type: AddDoctorToStudyDto })
+  @ApiCreatedResponse({ description: studyDocs.post.response, type: Study })
+  @ApiBadRequestResponse()
+  async addToStudy(@Body() addDoctorStudy: AddDoctorToStudyDto, @Param('studyId') _id: string) {
+    const doctor: any  =await  this.doctorService.findOne(addDoctorStudy.doctorId)
+    console.log(doctor[0])
+    if(doctor && doctor.length){
+      return this.studyService.addDoctor(_id, doctor[0]);
+    }
+    return new HttpException('doctor not found', HttpStatus.BAD_REQUEST)
+  }
+  @Delete(':studyId/doctors/:doctorId')
+  @ApiBody({ description: studyDocs.post.apiBody, type: CreateStudyDto })
+  @ApiCreatedResponse({ description: studyDocs.post.response, type: Study })
+  @ApiBadRequestResponse()
+  removeToStudy(
+    @Param('studyId') studyId: string,
+    @Param('doctorId') doctorId: string,
+  ) {
+    return this.studyService.removeDoctor(studyId, doctorId);
   }
 }

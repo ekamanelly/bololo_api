@@ -16,6 +16,7 @@ let DoctorModule = class DoctorModule {
 };
 DoctorModule = __decorate([
     (0, common_1.Module)({
+        exports: [doctor_service_1.DoctorService],
         imports: [mongoose_1.MongooseModule.forFeature([{
                     name: doctor_entity_1.Doctor.name, schema: doctor_entity_1.DoctorSchema
                 }])],

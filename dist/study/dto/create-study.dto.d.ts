@@ -1,8 +1,9 @@
 export declare class CreateStudyDto {
-    title: "string";
-    imageUrl: "string";
-    description: "string";
+    title: 'string';
+    imageUrl: 'string';
+    description: 'string';
     isDrafted: boolean;
-    status: 'array of what?';
+    statusProperty: 'array of what?';
+    typeProperty: 'array of what?';
     datePosted: number;
 }

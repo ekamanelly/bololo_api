@@ -16,11 +16,13 @@ const studiy_property_entity_1 = require("./entities/studiy-property.entity");
 const study_property_controller_1 = require("./study-property.controller");
 const study_image_controller_1 = require("./study-image-controller");
 const study_image_service_1 = require("./study-image.service");
+const doctor_module_1 = require("../doctor/doctor.module");
 let StudyModule = class StudyModule {
 };
 StudyModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            doctor_module_1.DoctorModule,
             mongoose_1.MongooseModule.forFeature([
                 { name: study_entity_1.Study.name, schema: study_entity_1.StudySchema },
                 { name: studiy_property_entity_1.StudyProperty.name, schema: studiy_property_entity_1.studyPropertySchema },
