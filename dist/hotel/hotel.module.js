@@ -10,11 +10,16 @@ exports.HotelModule = void 0;
 const common_1 = require("@nestjs/common");
 const hotel_service_1 = require("./hotel.service");
 const hotel_controller_1 = require("./hotel.controller");
+const mongoose_1 = require("@nestjs/mongoose");
+const hotel_entity_1 = require("./entities/hotel.entity");
 let HotelModule = class HotelModule {
 };
 HotelModule = __decorate([
     (0, common_1.Module)({
         controllers: [hotel_controller_1.HotelController],
+        imports: [mongoose_1.MongooseModule.forFeature([{
+                    name: hotel_entity_1.Hotel.name, schema: hotel_entity_1.HotelSchema
+                }])],
         providers: [hotel_service_1.HotelService]
     })
 ], HotelModule);

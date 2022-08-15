@@ -28,13 +28,13 @@ let HotelController = class HotelController {
         return this.hotelService.findAll();
     }
     findOne(id) {
-        return this.hotelService.findOne(+id);
+        return this.hotelService.findOne(id);
     }
     update(id, updateHotelDto) {
-        return this.hotelService.update(+id, updateHotelDto);
+        return this.hotelService.update(id, updateHotelDto);
     }
     remove(id) {
-        return this.hotelService.remove(+id);
+        return this.hotelService.remove(id);
     }
 };
 __decorate([
