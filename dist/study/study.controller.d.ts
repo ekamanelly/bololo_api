@@ -55,13 +55,13 @@ export declare class StudyController {
     remove(id: string): Promise<{
         acknowledged: boolean;
     }>;
-    addToStudy(addDoctorStudy: AddDoctorToStudyDto, _id: string): Promise<{
+    addToStudy(addDoctorStudy: AddDoctorToStudyDto, _id: string): Promise<HttpException | {
         acknowledged: boolean;
         study: import("mongodb").UpdateResult;
     } | {
         acknowledged: boolean;
         study?: undefined;
-    } | HttpException>;
+    }>;
     removeToStudy(studyId: string, doctorId: string): Promise<{
         acknowledged: boolean;
     }>;

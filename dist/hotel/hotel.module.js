@@ -6,22 +6,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.HotelModule = void 0;
 const common_1 = require("@nestjs/common");
-const mongoose_1 = require("@nestjs/mongoose");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
-const hotel_module_1 = require("./hotel/hotel.module");
-let AppModule = class AppModule {
+const hotel_service_1 = require("./hotel.service");
+const hotel_controller_1 = require("./hotel.controller");
+let HotelModule = class HotelModule {
 };
-AppModule = __decorate([
+HotelModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forRoot('mongodb+srv://gadolin:mqnizjC8pLOCTwk1@vorem.zly4i.mongodb.net/gadolin?retryWrites=true&w=majority'),
-            hotel_module_1.HotelModule
-        ],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        controllers: [hotel_controller_1.HotelController],
+        providers: [hotel_service_1.HotelService]
     })
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+], HotelModule);
+exports.HotelModule = HotelModule;
+//# sourceMappingURL=hotel.module.js.map
